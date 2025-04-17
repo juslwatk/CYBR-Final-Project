@@ -12,7 +12,7 @@ def generate_batch(batch_size=128, bit_length=16):
 # Step 2: Hyperparameters
 bit_length = 16
 batch_size = 128
-epochs = 500
+epochs = 100
 
 # Step 3: Load models
 alice = Alice()
@@ -68,3 +68,19 @@ for epoch in range(epochs):
         print("Bob's guess:     ", bob_output[0].detach().round())
         print("Eve's guess:     ", eve_output[0].detach().round())
         print("-" * 50)
+
+with torch.no_grad():
+    test_msg, test_key = generate_batch(batch_size, bit_length)
+    cipher = alice(torch.cat((test_msg, test_key), dim =1))
+    bob_output = bob(torch.cat((cipher, test_key), dim =1))
+    eve_output = eve(cipher)
+    
+    bob_acc = ((bob_output.round() == test_msg).float().mean().item()) * 100
+    eve_acc = ((eve_output.round() == test_msg).float().mean().item())*100
+    
+    print("FINAL EVALUATION:")
+    print("Sample message:  ", test_msg[0].round())
+    print("Bob's guess:     ", bob_output[0].detach().round())
+    print("Eve's guess:     ", eve_output[0].detach().round())
+    print("-" * 50)
+    print(f"Final Bob accuarcy: {bob_acc:.2f} %, Final Eve accuarcy: {eve_acc:.2f}%")
