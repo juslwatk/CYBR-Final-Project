@@ -14,4 +14,21 @@ orig = orig.decode()
 print(orig)
 inf.close()
 
+#Key generation
+class GenKey():
+    key = Fernet.generate_key()
 
+#Encryption class
+class Enc(key):
+    cipher_suite = Fernet(key)
+
+    inf = open ("msg.txt", "r")
+    msg = bytes(inf.readline(), 'utf-8')
+    cipher = cipher_suite.encrypt(msg)
+    return cipher
+
+class Dec(key, cipher):
+    cipher_suite = Fernet(key)
+    orig = cipher_suite.decrypt(cipher)
+    orig = orig.decode()
+    return orig
