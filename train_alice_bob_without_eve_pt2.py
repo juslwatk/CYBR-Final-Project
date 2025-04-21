@@ -6,13 +6,13 @@ from models import Alice, Bob, Eve
 # Step 1: Generate random messages and keys
 def generate_batch(batch_size=128, bit_length=16):
     msg = torch.randint(0, 2, (batch_size, bit_length)).float()
-    key = torch.randint(0, 2, (batch_size, bit_length)).float()
+    key = torch.randint(0, 2, (batch_size, bit_length)).float()  
     return msg, key
 
 # Step 2: Hyperparameters
 bit_length = 16
 batch_size = 128
-epochs = 100
+epochs = 500
 
 # Step 3: Load models
 alice = Alice()
