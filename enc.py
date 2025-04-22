@@ -17,6 +17,7 @@ inf.close()
 #Key generation
 class GenKey():
     key = Fernet.generate_key()
+    return key
 
 #Encryption class
 class Enc(key):
