@@ -1,35 +1,45 @@
-#basic example of reading a msg from a file, encrypting it, and decrypting it
 from cryptography.fernet import Fernet
 
+#basic example of reading a msg from a file, encrypting it, and decrypting it
+#generates key
 key = Fernet.generate_key()
 cipher_suite = Fernet(key)
 
+#reads line from file and formats it for encryption
 inf = open ("msg.txt", "r")
 msg = bytes(inf.read(), 'utf-8')
-print(msg)
+
+#encrypts message
 cipher = cipher_suite.encrypt(msg)
-print(cipher)
+
+#decrypts message
 orig = cipher_suite.decrypt(cipher)
 orig = orig.decode()
-print(orig)
 inf.close()
 
 #Key generation
-class GenKey():
-    key = Fernet.generate_key()
-    return key
+class GenKey:
+    def __init__():
+        key = Fernet.generate_key()
+    def foward():
+        return key
 
 #Encryption class
-class Enc(key):
-    cipher_suite = Fernet(key)
+class Enc():
+    def __init__(self, key):
+        cipher_suite = Fernet(key)
 
-    inf = open ("msg.txt", "r")
-    msg = bytes(inf.readline(), 'utf-8')
-    cipher = cipher_suite.encrypt(msg)
-    return cipher
+        inf = open ("msg.txt", "r")
+        msg = bytes(inf.readline(), 'utf-8')
+        cipher = cipher_suite.encrypt(msg)
+    
+    def forward():
+        return cipher
 
-class Dec(key, cipher):
-    cipher_suite = Fernet(key)
-    orig = cipher_suite.decrypt(cipher)
-    orig = orig.decode()
-    return orig
+class Dec():
+    def __init__(self, orig):
+        cipher_suite = Fernet(key)
+        orig = cipher_suite.decrypt(cipher)
+        orig = orig.decode()
+    def forward(self, orig):
+        return self.orig
