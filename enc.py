@@ -17,29 +17,3 @@ orig = cipher_suite.decrypt(cipher)
 orig = orig.decode()
 inf.close()
 
-#Key generation
-class GenKey:
-    def __init__():
-        key = Fernet.generate_key()
-    def foward():
-        return key
-
-#Encryption class
-class Enc():
-    def __init__(self, key):
-        cipher_suite = Fernet(key)
-
-        inf = open ("msg.txt", "r")
-        msg = bytes(inf.readline(), 'utf-8')
-        cipher = cipher_suite.encrypt(msg)
-    
-    def forward():
-        return cipher
-
-class Dec():
-    def __init__(self, orig):
-        cipher_suite = Fernet(key)
-        orig = cipher_suite.decrypt(cipher)
-        orig = orig.decode()
-    def forward(self, orig):
-        return self.orig
