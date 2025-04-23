@@ -5,6 +5,25 @@ from cryptography.fernet import Fernet
 from models import Eve
 import random
 
+data_set = []
+
+def read_sentences_from_file(filename):
+    """
+    Reads a file and returns a list of sentences.
+    Each sentence is assumed to be on a separate line.
+    
+    :param filename: str - path to the file
+    :return: list of sentences
+    """
+    sentences = []
+    try:
+        with open(filename, 'r', encoding='utf-8') as file:
+            sentences = [line.strip() for line in file if line.strip()]
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
+    return sentences
+
+
 def xor_encrypt(msg: bytes):
     key = bytes([random.randint(0, 255) for _ in msg])
     cipher = bytes([m ^ k for m, k in zip(msg, key)])
@@ -57,7 +76,9 @@ def train_eve_on_random_data(msg: bytes, epochs=100, batch_size=32):
     return eve
 
 # Run and test it!
-msg = b"This Project is very difficult"  # can be any message of any length
+# inf = open ("android_dev.txt", "r")
+# msg = bytes(inf.read(), 'utf-8')
+msg = bytes(random.choice(read_sentences_from_file("android_dev.txt")), 'utf-8')
 eve_model = train_eve_on_random_data(msg)
 
 # Test Eve on a new cipher
@@ -68,3 +89,6 @@ recovered = tensor_to_bytes(eve_model(test_input))
 print("\nOriginal Message: ", msg)
 print("Recovered by Eve: ", recovered)
 print("Success: ", recovered == msg)
+
+# Save Eve's state_dict (weights only)
+torch.save(eve_model.state_dict(), "eve_model_weights.pth")
