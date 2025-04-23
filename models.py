@@ -82,3 +82,5 @@ class Eve(nn.Module):
             nn.Linear(64, bit_length),
             nn.Sigmoid()
         )
+    def forward(self, x):
+            return self.model(x)
